@@ -33,6 +33,7 @@ Neither limitation applies to agents running natively on the operator's machine.
 - **File names:** kebab-case; ADRs `NNNN-short-title.md`.
 
 ## Engineering conventions worth restating
+- **PRs open on push** (ADR-0018 mechanics): pushing a branch named `s<stage>/…`, `docs/…`, or `fix/…` auto-opens its PR via the in-repo `auto-pr` workflow — the PR title/body come from the head commit's message, written template-shaped. Agents never need the GitHub API to open a PR, and never merge: the operator's merge click is the approval.
 - Model names, thresholds, and SLAs are config with consequences — changes re-run the relevant gate.
 - Every estimate is labeled an estimate. Every figure carries its unit.
 - Diagrams live as Mermaid sources in the spec build; rendered SVGs are artifacts, sources are truth.

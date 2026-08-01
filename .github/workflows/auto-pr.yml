@@ -1,0 +1,32 @@
+# بسم الله الرحمن الرحيم
+# Auto-PR (ADR-0018 mechanics): pushing a work branch opens its PR.
+# The agent's one open door is git — so branch-push IS pr-open. The PR title/body
+# come from the head commit's message, written template-shaped. Runs with GitHub-side
+# credentials, untouched by any sandbox gate. Merging stays the operator's click.
+name: auto-pr
+on:
+  push:
+    branches: ['s*/**', 'docs/**', 'fix/**']
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Open the PR if none exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="${GITHUB_REF_NAME}"
+          existing=$(gh pr list --head "$branch" --json number --jq length)
+          if [ "$existing" -gt 0 ]; then
+            echo "PR already open for $branch — nothing to do"
+            exit 0
+          fi
+          title=$(git log -1 --pretty=%s)
+          git log -1 --pretty=%b > /tmp/pr-body.md
+          gh pr create --base main --head "$branch" --title "$title" --body-file /tmp/pr-body.md

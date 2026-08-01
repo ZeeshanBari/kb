@@ -11,6 +11,12 @@ owner: zeeshan
 
 All notable changes to this documentation. Newest first.
 
+## 2026-08-01 (stage 0 — the repo gate)
+- **Commit #1 is on GitHub** — `kb` seeded with the Phase-1 platform (13/13 from a fresh `npm ci`), the full docs tree as `docs/`, and CI as the merge gate (test · real-Postgres · check-docs · gitleaks). `kb-deploy` seeded as a placeholder.
+- **ADR-0020 accepted** — the operator flipped both repos public at RD-0 agreement (GitHub Free doesn't enforce protection on private repos): enforcement is now free and hard; nothing credential-shaped is committed even encrypted (ADR-0019's SOPS file deferred); `kb-deploy` returns private before company config lands (stage-1 pre-condition). Supersedes ADR-0014's visibility clause.
+- **RD-0 agreed** (gate 1) with the public-repos amendment; PR #1 carries this record — the first gated change.
+- **Auto-PR workflow added** — pushing a `s*/`, `docs/`, or `fix/` branch opens its own PR with GitHub-side credentials (the sandbox's API gate is bypassed by design, not circumvented: git push is the agent's one open door, and the repo turns pushes into PRs). CI now runs on work-branch pushes so the checks attach to the same commit. PR creation is agent-autonomous; merging remains the operator's click.
+
 ## 2026-08-01 (dev credentials)
 - **ADR-0019 accepted** — dev/CI credentials: `secrets/dev.enc.yaml` (SOPS + age, committed encrypted) is the truth; `.env` is a generated, gitignored convenience; CI holds one secret (`AGE_KEY`); the agent's PAT never enters CI (one credential per consumer). Bootstrap hand-off = a gitignored `.env` on the operator's Mac read over the bridge — amends ADR-0018's paste-in-chat clause.
 - conventions.md bridge section gains rule 3 (credentials hand-off) · root `.gitignore` now ignores `.env*` (keeps `.env.example`) and age keys · kb code seed gains `.gitignore` + `.env.example`.
