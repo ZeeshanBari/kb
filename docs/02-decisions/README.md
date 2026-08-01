@@ -26,12 +26,13 @@ Every significant choice lives here as a numbered, **immutable** record. To chan
 | [0011](0011-secrets-in-db-recovery-key.md) | Secrets envelope-encrypted in Postgres, one recovery key | accepted |
 | [0012](0012-converge-installer-not-terraform.md) | A converge CLI installer — not Terraform, not a bash script | accepted |
 | [0013](0013-wizard-two-browser-phases.md) | The install wizard is two browser phases — zero native apps | accepted · first under the agree-first rule |
-| [0014](0014-monorepo-github.md) | One product monorepo + a tiny deploy repo, on private GitHub | accepted |
+| [0014](0014-monorepo-github.md) | One product monorepo + a tiny deploy repo, on private GitHub | accepted · visibility clause superseded by 0020 |
 | [0015](0015-renders-are-generated.md) | Markdown canonical; HTML renders generated, freshness-checked | accepted |
 | [0016](0016-execution-plan.md) | The execution plan — eleven stages, five gates, RDs first | accepted |
 | [0017](0017-feature-lifecycle.md) | Feature lifecycle — registry, feature_state flags, one onboarding flow | accepted |
 | [0018](0018-agentic-workshop.md) | The agentic workshop — PR structure, approval auto-merge, scoped token | accepted |
-| [0019](0019-dev-credentials.md) | Dev credentials — SOPS+age truth, generated .env, one AGE_KEY in CI | accepted |
+| [0019](0019-dev-credentials.md) | Dev credentials — SOPS+age truth, generated .env, one AGE_KEY in CI | accepted · deferred while repos are public (0020) |
+| [0020](0020-repos-public.md) | Repos public — free enforced protection; no committed ciphertext | accepted |
 
 ## Template
 
