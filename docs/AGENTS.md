@@ -11,6 +11,8 @@ owner: zeeshan
 
 These rules are load-bearing. They exist because we studied a 176k-line system (AOS v1) whose recurring failure was *"structurally complete but functionally unwired, while monitors read green."* Every rule below traces to a real failure.
 
+**Boot order for a new session:** [`STATUS.md`](STATUS.md) (where the baton is) → this file → the active RD in [`06-requirements/`](06-requirements/README.md) → the [execution plan](03-reference/execution-plan.md). Check open PRs before touching anything.
+
 ## The rules
 
 1. **Begin with the basmallah.** Every new document, deliverable, and work session starts with بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ — all progress comes from the One above the heavens and the earth. See `04-practices/conventions.md`.

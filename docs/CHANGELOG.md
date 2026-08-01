@@ -11,6 +11,10 @@ owner: zeeshan
 
 All notable changes to this documentation. Newest first.
 
+## 2026-08-01 (agent navigation)
+- **`STATUS.md` added — the baton.** One-line status (mirrored in the repo About), remaining-in-stage table, shipped-features list, and the 6-step boot order for any new agent. Every PR that changes what's true updates it.
+- Repo root gains a thin `CLAUDE.md` (auto-loaded agent entry point → `docs/`) and a `CHANGELOG.md` signpost; the repo README now opens with the live status line. Full content stays in `docs/` — root files are signposts, never sources.
+
 ## 2026-08-01 (stage 0 — the repo gate)
 - **Commit #1 is on GitHub** — `kb` seeded with the Phase-1 platform (13/13 from a fresh `npm ci`), the full docs tree as `docs/`, and CI as the merge gate (test · real-Postgres · check-docs · gitleaks). `kb-deploy` seeded as a placeholder.
 - **ADR-0020 accepted** — the operator flipped both repos public at RD-0 agreement (GitHub Free doesn't enforce protection on private repos): enforcement is now free and hard; nothing credential-shaped is committed even encrypted (ADR-0019's SOPS file deferred); `kb-deploy` returns private before company config lands (stage-1 pre-condition). Supersedes ADR-0014's visibility clause.

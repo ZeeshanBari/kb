@@ -2,9 +2,13 @@
 
 # kb — the company knowledge graph
 
+> **Status:** Stage 0 — the repo gate · ~95% done · shipped: replay-safe ingest platform · self-checking docs · CI merge gate · auto-PR workshop — live detail in [`docs/STATUS.md`](docs/STATUS.md)
+
 A company-wide knowledge base built from channel messages and a shared drive, answering multi-hop questions like *"why did sales drop in March?"* — with proof. The product monorepo (ADR-0014): code and docs travel together.
 
-**Start here → [`docs/`](docs/README.md)** — vision, architecture, every decision (ADR-0001…), the agreed execution plan, and [`docs/AGENTS.md`](docs/AGENTS.md) for the rules any agent must follow. The five-gate stage lifecycle and PR conduct are law here: **no RD, no branch; never merge red.**
+**[📓 Change log](docs/CHANGELOG.md) · [🧭 Status / the baton](docs/STATUS.md) · [📚 All docs](docs/README.md) · [🗺 Execution plan](docs/03-reference/execution-plan.md) · [🤖 Agent rules](docs/AGENTS.md)**
+
+Agents: your entry point is [`CLAUDE.md`](CLAUDE.md). The five-gate stage lifecycle and PR conduct are law here: **no RD, no branch; never merge red.**
 
 ## Layout
 
@@ -13,7 +17,7 @@ A company-wide knowledge base built from channel messages and a shared drive, an
 - `tests/unit` — pure logic, milliseconds, no network
 - `tests/integration` — against REAL Postgres, zero DB mocks
 - `docs/` — the only source of truth; `node docs/tools/check-docs.mjs docs` must stay green
-- `.github/workflows/ci.yml` — the merge gate: **test · docs · gitleaks**
+- `.github/workflows/` — the merge gate (`ci`: test · docs · gitleaks) + `auto-pr` (pushing a work branch opens its PR)
 
 ## Run it
 

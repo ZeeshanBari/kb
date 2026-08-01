@@ -11,7 +11,7 @@ import { join, dirname, resolve, relative } from 'path';
 
 const ROOT = resolve(process.argv[2] ?? '.');
 const DOC_DIRS = ['00-vision','01-architecture','02-decisions','03-reference','04-practices','05-research','06-requirements'];
-const ROOT_DOCS = ['README.md','AGENTS.md','CHANGELOG.md'];
+const ROOT_DOCS = ['README.md','AGENTS.md','CHANGELOG.md','STATUS.md'];
 const STALE_DAYS = 180;
 
 let fails = 0, warns = 0;
