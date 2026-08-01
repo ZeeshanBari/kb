@@ -20,9 +20,10 @@ Every PR that changes what's true here updates this file — rule 5 applies to s
 | | |
 |---|---|
 | **Active stage** | 0 — the repo gate · [RD-0](06-requirements/RD-0-repo-gate.md) (agreed) |
-| **Remaining in stage** | operator merges PR #1 (ADR-0020) and PR #2 (this navigation layer) · required checks `test` · `docs` · `gitleaks` added to the main ruleset (~30 s in Settings → Rules) · operator done-stamp on RD-0 |
+| **Done this stage** | seed commit (13/13 CI) · kb-deploy seeded · auto-PR workshop · **PR #1 (ADR-0020) merged 2026-08-01** ✓ |
+| **Remaining in stage** | merge PR #2 (this navigation layer) · flip Settings → Actions → General → **"Allow GitHub Actions to create and approve pull requests"** (auto-PR needs it) · required checks `test` · `docs` · `gitleaks` in the main ruleset · set the About line · operator done-stamp on RD-0 |
 | **Next stage** | 1 — walking skeleton on the real box. **RD-1 not yet written — no RD, no branch** |
-| **Waiting on operator** | the two merges · the ruleset checks · the About line (copy the one-liner above) |
+| **Waiting on operator** | everything in "remaining" — all clicks, ~2 minutes total |
 
 ## Shipped so far — one line per feature
 
