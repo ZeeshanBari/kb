@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Install Wizard — Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;450;510;590&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0A; --panel:#121210; --sec:#1A1917; --ter:#24221F;
+  --tx:#FFFFFF; --tx2:#E7E4DE; --tx3:#97938C; --tx4:#66625B;
+  --bd:rgba(245,242,236,.08); --bd2:rgba(245,242,236,.13); --bd3:rgba(245,242,236,.20);
+  --accent:#D6CCB4; --accent-dim:rgba(214,204,180,.14); --on-accent:#14130E;
+  --serif:"EB Garamond",Georgia,serif; --sans:"Inter",-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx2);font-family:var(--serif);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 28px 120px}
+h1,h2,h3,h4{font-family:var(--sans)}
+h2{font-size:14px;font-weight:590;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0 0 6px}
+h3{font-family:var(--serif);font-size:29px;font-weight:600;line-height:1.22;color:var(--tx);margin:0 0 16px;letter-spacing:-.01em}
+h4{font-size:12px;font-weight:590;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);margin:26px 0 10px}
+p{margin:0 0 15px}
+strong{color:var(--tx);font-weight:600}
+em{color:var(--accent);font-style:italic}
+code{font-family:var(--mono);font-size:.84em;background:var(--ter);padding:1px 6px;border-radius:4px;color:var(--tx2)}
+header{padding:80px 0 16px;text-align:center}
+.bism{font-family:var(--serif);font-size:20px;color:var(--accent);opacity:.85;margin-bottom:40px}
+h1{font-family:var(--serif);font-size:46px;font-weight:600;line-height:1.12;color:var(--tx);margin:0 0 16px;letter-spacing:-.022em}
+.sub{font-size:19px;color:var(--tx3);max-width:660px;margin:0 auto;line-height:1.55}
+.proposed{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:590;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);background:var(--accent-dim);border-radius:999px;padding:6px 14px;margin-bottom:22px}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--bd3),transparent);margin:56px 0}
+section{margin:0 0 20px}
+.lede{font-size:18.5px;color:var(--tx2);margin-bottom:22px}
+figure{margin:26px 0;background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:24px 18px 14px;overflow-x:auto}
+figure .mmd{display:flex;justify-content:center}
+figure .mmd svg{height:auto}
+figcaption{font-family:var(--sans);font-size:12px;color:var(--tx4);text-align:center;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.stat{background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:20px}
+.stat .v{font-family:var(--sans);font-size:27px;font-weight:590;color:var(--tx);line-height:1.1;margin-bottom:8px}
+.stat .v.hi{color:var(--accent)}
+.stat .l{font-family:var(--sans);font-size:12px;color:var(--tx3);line-height:1.45}
+.flag{border-left:2px solid var(--accent);background:var(--sec);padding:18px 22px;margin:22px 0;border-radius:0 6px 6px 0}
+.flag .k{font-family:var(--sans);font-size:11px;font-weight:590;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:7px}
+.dec{background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:24px 26px;margin:16px 0}
+.dec .n{font-family:var(--sans);font-size:11px;font-weight:590;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px}
+.dec .t{font-family:var(--sans);font-size:17px;font-weight:510;color:var(--tx);display:block;margin-bottom:12px}
+.dec .row{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--bd);font-size:15.5px}
+.dec .row .lab{font-family:var(--sans);font-size:11px;font-weight:590;letter-spacing:.08em;text-transform:uppercase;color:var(--tx4);padding-top:3px}
+.dec .row .body{color:var(--tx3);line-height:1.55}
+.dec .row .body b{color:var(--tx2);font-weight:600}
+.dec .row.chosen .lab{color:var(--accent)}
+.dec .row.chosen .body{color:var(--tx2)}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-family:var(--sans);font-size:12.5px}
+th{text-align:left;font-size:10.5px;font-weight:590;letter-spacing:.09em;text-transform:uppercase;color:var(--tx4);padding:0 10px 9px 0;border-bottom:1px solid var(--bd2)}
+td{padding:10px 10px 10px 0;border-bottom:1px solid var(--bd);color:var(--tx3);vertical-align:top;line-height:1.5}
+td:first-child{color:var(--tx2)}
+tr:last-child td{border-bottom:none}
+ul{margin:0 0 15px;padding-left:20px}
+li{margin-bottom:8px}
+li::marker{color:var(--tx4)}
+
+/* ---- screen mockups ---- */
+.scr{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;margin:22px 0;align-items:start}
+.shot{background:#0E0E0D;border:1px solid var(--bd2);border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.tbar{height:28px;background:#161513;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--bd)}
+.tbar i{width:9px;height:9px;border-radius:50%;background:#2c2a26;display:block}
+.tbar .url{font-family:var(--mono);font-size:10.5px;color:var(--tx4);margin-left:8px}
+.sbody{padding:22px 26px 24px}
+.stp{font-family:var(--sans);font-size:10.5px;font-weight:590;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.stp .tm{color:var(--tx4);font-weight:450;letter-spacing:.02em;text-transform:none;margin-left:8px}
+.q{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--tx);line-height:1.3;margin-bottom:6px}
+.hp{font-family:var(--sans);font-size:12.5px;color:var(--tx3);line-height:1.5;margin-bottom:14px}
+.fl{font-family:var(--sans);font-size:10px;font-weight:590;letter-spacing:.09em;text-transform:uppercase;color:var(--tx4);margin:12px 0 5px}
+.inp{background:#171614;border:1px solid var(--bd2);border-radius:6px;padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--tx2)}
+.inp .ph{color:var(--tx4)}
+.optc{border:1px solid var(--bd2);border-radius:8px;padding:11px 14px;margin:8px 0;font-family:var(--sans);font-size:13px;color:var(--tx2);display:flex;justify-content:space-between;align-items:center}
+.optc.sel{border-color:var(--accent);background:var(--accent-dim)}
+.optc small{display:block;color:var(--tx4);font-size:11.5px;margin-top:2px}
+.chip{display:inline-block;font-family:var(--sans);font-size:10.5px;font-weight:510;border-radius:999px;padding:3px 10px;margin-top:12px}
+.chip.ok{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(214,204,180,.25)}
+.chip.wait{color:var(--tx4);border:1px solid var(--bd2)}
+.btns{display:flex;gap:8px;margin-top:18px}
+.btn{font-family:var(--sans);font-size:12.5px;font-weight:510;padding:8px 16px;border-radius:6px;border:1px solid var(--bd2);color:var(--tx3)}
+.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tgl{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);font-family:var(--sans);font-size:13px;color:var(--tx2)}
+.tgl:last-of-type{border-bottom:none}
+.tgl small{display:block;color:var(--tx4);font-size:11.5px}
+.sw{width:34px;height:19px;border-radius:999px;background:#2c2a26;position:relative;flex:none}
+.sw::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:var(--tx4);top:2px;left:2px}
+.sw.on{background:var(--accent)}
+.sw.on::after{background:var(--on-accent);left:17px}
+.prog{font-family:var(--mono);font-size:11.5px;line-height:2;color:var(--tx3)}
+.prog .done{color:var(--accent)}
+.ann{font-family:var(--sans);font-size:12.5px;color:var(--tx3);line-height:1.55;background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:16px 18px}
+.ann b{display:block;font-size:10px;font-weight:590;letter-spacing:.1em;text-transform:uppercase;color:var(--tx4);margin:12px 0 3px}
+.ann b:first-child{margin-top:0}
+.klist{font-family:var(--mono);font-size:11px;color:var(--tx3);background:#171614;border:1px solid var(--bd);border-radius:6px;padding:10px 12px;line-height:1.9}
+.key{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:var(--tx);background:#171614;border:1px dashed var(--bd3);border-radius:6px;padding:12px;text-align:center;margin:10px 0}
+@media(max-width:760px){.wrap{padding:0 16px 80px}h1{font-size:32px}.scr{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="bism">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+  <div class="proposed">Agreed 2026-08-01 · recorded as ADR-0013</div>
+  <h1>The Install Wizard</h1>
+  <p class="sub">Form factor, both phases, and every question — screen by screen, with what each one validates and why it earns its place.</p>
+</header>
+
+<div class="rule"></div>
+
+<!-- 0 · FORM FACTOR -->
+<section>
+  <h2>0 · Form factor</h2>
+  <h3>My recommendation — and the honest alternatives</h3>
+  <p class="lede">The question splits on one observation: the wizard's real work is <strong>OAuth flows and credential entry</strong>, and OAuth lives in the browser by design — Google actively blocks embedded webviews. So the browser is non-negotiable for phase 2; the only open question is what runs the first ten minutes, before a server exists.</p>
+
+  <div class="dec">
+    <span class="n">ADR-0013 — agreed 2026-08-01</span>
+    <span class="t">Two browser phases. Zero native apps.</span>
+    <div class="row chosen"><div class="lab">Proposed</div><div class="body"><b>Phase 1 — the launcher:</b> <code>npx kb@latest</code> starts a tiny local web UI (localhost) in your browser; it collects the pre-server answers, then provisions and deploys with live progress. <b>Phase 2 — the wizard:</b> served by the system itself at your real domain, first-boot setup mode, one-time admin URL. Same React components in both; the CLI does what CLIs are native to (SSH, provisioning), the browser does what browsers are native to (OAuth, forms, live status).</div></div>
+    <div class="row"><div class="lab">Alt A</div><div class="body"><b>Native Mac installer app</b> — signing + notarization + an update pipeline (and CA$130/yr developer account) for ten minutes of use; excludes non-Mac installers; and OAuth-in-webview is blocked by Google anyway, so it would bounce to the browser regardless. The mini itself needs only an enroll <i>script</i> — a menu-bar status item can come later, and it's not an installer.</div></div>
+    <div class="row"><div class="lab">Alt B</div><div class="body"><b>Hosted click-to-deploy</b> (a site of ours that provisions for you) — smoothest possible UX, but we'd hold users' Hetzner tokens on our server and run always-on infrastructure; the sovereignty story breaks on day one. A legitimate future business; the wrong v1.</div></div>
+    <div class="row"><div class="lab">Alt C</div><div class="body"><b>Pure CLI prompts</b> — fine for us, hostile for the audience this is for; and phase 2 still needs the browser, so a TUI just duplicates the wizard in a worse medium.</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v hi">0</div><div class="l">Native apps to build, sign, notarize, or update — the browser and the CLI each do what they're native to</div></div>
+    <div class="stat"><div class="v">19</div><div class="l">Questions total across both phases — 12 are paste-a-value, 5 are choices with safe defaults, 2 are free text</div></div>
+    <div class="stat"><div class="v">✓ → ∞</div><div class="l">Every green tick the wizard earns becomes a permanent health check that keeps running nightly, forever</div></div>
+  </div>
+
+  <figure><div class="mmd"><svg id="mmd_WZ1" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 564px;" viewBox="0 0 564 730" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mmd_WZ1{font-family:Inter,-apple-system,sans-serif;font-size:13px;fill:#97938C;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mmd_WZ1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mmd_WZ1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mmd_WZ1 .error-icon{fill:#151513;}#mmd_WZ1 .error-text{fill:#eaeaec;stroke:#eaeaec;}#mmd_WZ1 .edge-thickness-normal{stroke-width:1px;}#mmd_WZ1 .edge-thickness-thick{stroke-width:3.5px;}#mmd_WZ1 .edge-pattern-solid{stroke-dasharray:0;}#mmd_WZ1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mmd_WZ1 .edge-pattern-dashed{stroke-dasharray:3;}#mmd_WZ1 .edge-pattern-dotted{stroke-dasharray:2;}#mmd_WZ1 .marker{fill:#66625B;stroke:#66625B;}#mmd_WZ1 .marker.cross{stroke:#66625B;}#mmd_WZ1 svg{font-family:Inter,-apple-system,sans-serif;font-size:13px;}#mmd_WZ1 p{margin:0;}#mmd_WZ1 .label{font-family:Inter,-apple-system,sans-serif;color:#E7E4DE;}#mmd_WZ1 .cluster-label text{fill:#eaeaec;}#mmd_WZ1 .cluster-label span{color:#eaeaec;}#mmd_WZ1 .cluster-label span p{background-color:transparent;}#mmd_WZ1 .label text,#mmd_WZ1 span{fill:#E7E4DE;color:#E7E4DE;}#mmd_WZ1 .node rect,#mmd_WZ1 .node circle,#mmd_WZ1 .node ellipse,#mmd_WZ1 .node polygon,#mmd_WZ1 .node path{fill:#1A1917;stroke:#3a3833;stroke-width:1px;}#mmd_WZ1 .rough-node .label text,#mmd_WZ1 .node .label text,#mmd_WZ1 .image-shape .label,#mmd_WZ1 .icon-shape .label{text-anchor:middle;}#mmd_WZ1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mmd_WZ1 .rough-node .label,#mmd_WZ1 .node .label,#mmd_WZ1 .image-shape .label,#mmd_WZ1 .icon-shape .label{text-align:center;}#mmd_WZ1 .node.clickable{cursor:pointer;}#mmd_WZ1 .root .anchor path{fill:#66625B!important;stroke-width:0;stroke:#66625B;}#mmd_WZ1 .arrowheadPath{fill:#ededef;}#mmd_WZ1 .edgePath .path{stroke:#66625B;stroke-width:1px;}#mmd_WZ1 .flowchart-link{stroke:#66625B;fill:none;}#mmd_WZ1 .edgeLabel{background-color:#121210;text-align:center;}#mmd_WZ1 .edgeLabel p{background-color:#121210;}#mmd_WZ1 .edgeLabel rect{opacity:0.5;background-color:#121210;fill:#121210;}#mmd_WZ1 .labelBkg{background-color:rgba(18, 18, 16, 0.5);}#mmd_WZ1 .cluster rect{fill:#100F0E;stroke:#2c2a26;stroke-width:1px;}#mmd_WZ1 .cluster text{fill:#eaeaec;}#mmd_WZ1 .cluster span{color:#eaeaec;}#mmd_WZ1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,-apple-system,sans-serif;font-size:12px;background:#151513;border:1px solid hsl(60, 0%, 17.8431372549%);border-radius:2px;pointer-events:none;z-index:100;}#mmd_WZ1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#97938C;}#mmd_WZ1 rect.text{fill:none;stroke-width:0;}#mmd_WZ1 .icon-shape,#mmd_WZ1 .image-shape{background-color:#121210;text-align:center;}#mmd_WZ1 .icon-shape p,#mmd_WZ1 .image-shape p{background-color:#121210;padding:2px;}#mmd_WZ1 .icon-shape .label rect,#mmd_WZ1 .image-shape .label rect{opacity:0.5;background-color:#121210;fill:#121210;}#mmd_WZ1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mmd_WZ1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mmd_WZ1 .node .neo-node{stroke:#3a3833;}#mmd_WZ1 [data-look="neo"].node rect,#mmd_WZ1 [data-look="neo"].cluster rect,#mmd_WZ1 [data-look="neo"].node polygon{stroke:url(#mmd_WZ1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_WZ1 [data-look="neo"].swimlane.cluster rect{filter:none;}#mmd_WZ1 [data-look="neo"].node path{stroke:url(#mmd_WZ1-gradient);stroke-width:1px;}#mmd_WZ1 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_WZ1 [data-look="neo"].node .neo-line path{stroke:#3a3833;filter:none;}#mmd_WZ1 [data-look="neo"].node circle{stroke:url(#mmd_WZ1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_WZ1 [data-look="neo"].node circle .state-start{fill:#000000;}#mmd_WZ1 [data-look="neo"].icon-shape .icon{fill:url(#mmd_WZ1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_WZ1 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mmd_WZ1-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mmd_WZ1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mmd_WZ1 .dim>*{fill:rgb(21, 21, 19)!important;stroke:rgb(51, 49, 45)!important;color:rgb(151, 147, 140)!important;}#mmd_WZ1 .dim span{fill:rgb(21, 21, 19)!important;stroke:rgb(51, 49, 45)!important;color:rgb(151, 147, 140)!important;}#mmd_WZ1 .dim tspan{fill:rgb(151, 147, 140)!important;}#mmd_WZ1 .hot>*{stroke:rgb(214, 204, 180)!important;stroke-width:1.5px!important;}#mmd_WZ1 .hot span{stroke:rgb(214, 204, 180)!important;stroke-width:1.5px!important;}</style><g><marker id="mmd_WZ1_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_WZ1_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_WZ1_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_WZ1_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mmd_WZ1_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_WZ1_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_WZ1_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_WZ1_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mmd_WZ1_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_WZ1_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mmd_WZ1_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mmd_WZ1_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M136,94.5L136,98.333C136,102.167,136,109.833,141.302,117.135C146.605,124.437,157.21,131.374,162.512,134.842L167.815,138.31" id="mmd_WZ1-L_A_B_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTM2LCJ5Ijo5NC41fSx7IngiOjEzNiwieSI6MTE3LjV9LHsieCI6MTcxLjE2MjMwMzY2NDkyMTQ3LCJ5IjoxNDAuNX1d" data-look="classic" marker-end="url(#mmd_WZ1_flowchart-v2-pointEnd)"></path><path d="M282,285.5L282,289.333C282,293.167,282,300.833,282,307.833C282,314.833,282,321.167,282,324.333L282,327.5" id="mmd_WZ1-L_B_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MjgyLCJ5IjoyODUuNX0seyJ4IjoyODIsInkiOjMwOC41fSx7IngiOjI4MiwieSI6MzMxLjV9XQ==" data-look="classic" marker-end="url(#mmd_WZ1_flowchart-v2-pointEnd)"></path><path d="M282,418L282,421.833C282,425.667,282,433.333,282,440.333C282,447.333,282,453.667,282,456.833L282,460" id="mmd_WZ1-L_C_D_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6MjgyLCJ5Ijo0MTh9LHsieCI6MjgyLCJ5Ijo0NDF9LHsieCI6MjgyLCJ5Ijo0NjR9XQ==" data-look="classic" marker-end="url(#mmd_WZ1_flowchart-v2-pointEnd)"></path><path d="M282,589.5L282,593.333C282,597.167,282,604.833,282,611.833C282,618.833,282,625.167,282,628.333L282,631.5" id="mmd_WZ1-L_D_E_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6MjgyLCJ5Ijo1ODkuNX0seyJ4IjoyODIsInkiOjYxMi41fSx7IngiOjI4MiwieSI6NjM1LjV9XQ==" data-look="classic" marker-end="url(#mmd_WZ1_flowchart-v2-pointEnd)"></path><path d="M428,94.5L428,98.333C428,102.167,428,109.833,422.698,117.135C417.395,124.437,406.79,131.374,401.488,134.842L396.185,138.31" id="mmd_WZ1-L_CI_B_0" class=" edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CI_B_0" data-points="W3sieCI6NDI4LCJ5Ijo5NC41fSx7IngiOjQyOCwieSI6MTE3LjV9LHsieCI6MzkyLjgzNzY5NjMzNTA3ODUzLCJ5IjoxNDAuNX1d" data-look="classic" marker-end="url(#mmd_WZ1_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_CI_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="mmd_WZ1-flowchart-A-0" data-look="classic" transform="translate(136, 51.25)"><rect class="basic label-container" style="" x="-128" y="-43.25" width="256" height="86.5"></rect><g class="label" style="" transform="translate(-100, -29.25)"><rect></rect><foreignObject width="200" height="58.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>npx kb@latest<br/>a local launcher opens in your browser — localhost:4477</p></span></div></foreignObject></g></g><g class="node default  " id="mmd_WZ1-flowchart-B-1" data-look="classic" transform="translate(282, 213)"><rect class="basic label-container" style="" x="-128" y="-72.5" width="256" height="145"></rect><g class="label" style="" transform="translate(-100, -58.5)"><rect></rect><foreignObject width="200" height="117"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>phase 1 — the launcher · 6 screens · ~12 min<br/>where it lives · its address · company basics · options<br/>then provisions + deploys with live progress</p></span></div></foreignObject></g></g><g class="node default  " id="mmd_WZ1-flowchart-C-2" data-look="classic" transform="translate(282, 374.75)"><rect class="basic label-container" style="" x="-128" y="-43.25" width="256" height="86.5"></rect><g class="label" style="" transform="translate(-100, -29.25)"><rect></rect><foreignObject width="200" height="58.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>handoff<br/>one-time admin URL → https://kb.acme.com/setup</p></span></div></foreignObject></g></g><g class="node default  " id="mmd_WZ1-flowchart-D-3" data-look="classic" transform="translate(282, 526.75)"><rect class="basic label-container" style="" x="-128" y="-62.75" width="256" height="125.5"></rect><g class="label" style="" transform="translate(-100, -48.75)"><rect></rect><foreignObject width="200" height="97.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>phase 2 — the wizard · 10 steps · ~30 min<br/>a resumable checklist — each step verified live<br/>before it turns green</p></span></div></foreignObject></g></g><g class="node default hot " id="mmd_WZ1-flowchart-E-4" data-look="classic" transform="translate(282, 678.75)"><rect class="basic label-container" style="stroke:#D6CCB4 !important;stroke-width:1.5px !important" x="-128" y="-43.25" width="256" height="86.5"></rect><g class="label" style="" transform="translate(-100, -29.25)"><rect></rect><foreignObject width="200" height="58.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>finish — the status page<br/>every ✓ becomes a permanent check that keeps running nightly</p></span></div></foreignObject></g></g><g class="node default dim " id="mmd_WZ1-flowchart-CI-5" data-look="classic" transform="translate(428, 51.25)"><rect class="basic label-container" style="fill:#151513 !important;stroke:#33312d !important" x="-128" y="-43.25" width="256" height="86.5"></rect><g class="label" style="color:#97938C !important" transform="translate(-100, -29.25)"><rect></rect><foreignObject width="200" height="58.5"><div style="color: rgb(151, 147, 140) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#97938C !important" class="nodeLabel "><p>CI walks the identical path<br/>--answers file · wizard driven via its API</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mmd_WZ1-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mmd_WZ1-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mmd_WZ1-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3a3833" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(36, 0%, 23.137254902%)" stop-opacity="1"></stop></linearGradient></svg></div>
+  <figcaption>The journey. The wizard is a resumable checklist, not a forced march — close the browser anytime; state lives in the database.</figcaption></figure>
+</section>
+
+<div class="rule"></div>
+
+<!-- 1 · PHASE 1 -->
+<section>
+  <h2>1 · Phase 1 — the launcher</h2>
+  <h3>Six screens on localhost, ending with a live system</h3>
+
+  <!-- L1 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477</span></div>
+      <div class="sbody">
+        <div class="stp">Welcome <span class="tm">· 1 min</span></div>
+        <div class="q">Let's set up your company's knowledge base.</div>
+        <div class="hp">Before we start, have these within reach — the whole setup is about 45 minutes:</div>
+        <div class="klist">
+          ✓&nbsp; a domain you control&nbsp;&nbsp;·&nbsp; a credit card (≈ CA$31/mo of infrastructure)<br>
+          ✓&nbsp; admin access to your Slack workspace<br>
+          ✓&nbsp; admin access to your Google Workspace<br>
+          ✓&nbsp; an Anthropic account (or 3 minutes to make one)
+        </div>
+        <div class="btns"><span class="btn pri">Begin</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>Sets expectations; nothing worse than discovering you need a workspace admin at minute 30.<b>Questions</b>None — it's a checklist, not a form.</div>
+  </div>
+
+  <!-- L2 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477 · step 1 of 5</span></div>
+      <div class="sbody">
+        <div class="stp">Where <span class="tm">· 3 min</span></div>
+        <div class="q">Where will your system live?</div>
+        <div class="optc sel">Rent a server for me — recommended<small>Hetzner · 8 vCPU · 16 GB · ≈ CA$26/mo · you own the account</small></div>
+        <div class="optc">I already have a server<small>any Ubuntu box we can SSH into</small></div>
+        <div class="optc">This machine / a home server<small>Docker Desktop · access via Tailscale only</small></div>
+        <div class="fl">Hetzner API token — <span style="color:var(--accent)">how to create one (3 min) ↗</span></div>
+        <div class="inp">••••••••••••••••••••••••</div>
+        <span class="chip ok">✓ token works — 6 datacenters visible</span>
+        <div class="btns"><span class="btn">Back</span><span class="btn pri">Next</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The one truly structural choice — everything else adapts to it.<b>Validates</b>Token: lists datacenters live. SSH: connects, checks Ubuntu + free ports. Local: checks Docker.<b>Default</b>Rent (Tier A). Region defaults to Falkenstein; a "change region" link exposes nbg1/hel1 + the Ashburn-premium note.<b>Never stored on the server</b>— the Hetzner token stays in the local deployment dir only.</div>
+  </div>
+
+  <!-- L3 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477 · step 2 of 5</span></div>
+      <div class="sbody">
+        <div class="stp">Address <span class="tm">· 3 min</span></div>
+        <div class="q">What address should your team type?</div>
+        <div class="fl">Your system's address</div>
+        <div class="inp">kb<span class="ph">.acme.com</span></div>
+        <div class="hp" style="margin-top:8px">We detected your DNS is on <strong style="color:var(--tx2)">Cloudflare</strong> — we can set the record for you.</div>
+        <div class="fl">Cloudflare API token — R2 Edit + DNS Edit — <span style="color:var(--accent)">create with this template ↗</span></div>
+        <div class="inp">••••••••••••••••••••••••</div>
+        <span class="chip ok">✓ record set · ✓ R2 bucket created (backups will live here)</span>
+        <div class="btns"><span class="btn">Back</span><span class="btn pri">Next</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>TLS, login, and every evidence link hang off this name. The Cloudflare token also covers R2 — blobs and backups — so one paste serves two needs.<b>Validates</b>DNS record visible; bucket created + one test object written and deleted.<b>If DNS is elsewhere</b>Shows the exact A record to create and live-polls until it propagates.</div>
+  </div>
+
+  <!-- L4 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477 · step 3 of 5</span></div>
+      <div class="sbody">
+        <div class="stp">Company <span class="tm">· 1 min</span></div>
+        <div class="q">About the company.</div>
+        <div class="fl">Company name</div>
+        <div class="inp"><span class="ph">Acme Inc.</span></div>
+        <div class="fl">Who counts as "the team"?</div>
+        <div class="inp">anyone with a Google account @ <span class="ph">acme.com</span></div>
+        <div class="fl">Timezone — detected</div>
+        <div class="inp">America/Toronto ▾</div>
+        <div class="fl">Display currency for money answers</div>
+        <div class="inp">CAD ▾</div>
+        <div class="btns"><span class="btn">Back</span><span class="btn pri">Next</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The workspace domain is the login allowlist — the entire access-control perimeter in one answer. Timezone decides what "March" means in questions and when nightly jobs run.<b>Validates</b>Domain shape only — real proof comes when Google connects in phase 2.</div>
+  </div>
+
+  <!-- L5 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477 · step 4 of 5</span></div>
+      <div class="sbody">
+        <div class="stp">Options <span class="tm">· 1 min</span></div>
+        <div class="q">Three choices — all changeable later.</div>
+        <div class="tgl"><span>Mac mini edge<small>iMessage · WhatsApp · meeting audio — needs a Mac that stays on</small></span><span class="sw"></span></div>
+        <div class="tgl"><span>Outside watchers — recommended<small>healthchecks.io dead-man + Sentry errors · both free</small></span><span class="sw on"></span></div>
+        <div class="tgl"><span>Kanban board<small>none for now · Trello · Linear — phase 5 anyway</small></span><span style="font-family:var(--sans);font-size:12px;color:var(--tx3)">none ▾</span></div>
+        <div class="btns"><span class="btn">Back</span><span class="btn pri">Next</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>These gate which wizard steps appear later — the mini off means no enrollment step, ever, unless you add it from settings.<b>Default</b>mini off · watchers on · kanban none. Every toggle exists in settings afterward; the wizard is never the last chance.</div>
+  </div>
+
+  <!-- L6 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">localhost:4477 · step 5 of 5</span></div>
+      <div class="sbody">
+        <div class="stp">Create <span class="tm">· 6 min, mostly waiting</span></div>
+        <div class="q">Here's the plan. Nothing has been created yet.</div>
+        <div class="klist">1 server — CX42 · Falkenstein · ≈ CA$26/mo<br>1 storage bucket — R2 · ≈ CA$3/mo<br>1 DNS record — kb.acme.com<br>software — 4 containers · TLS · nightly backups</div>
+        <div class="prog" style="margin-top:12px">
+          <span class="done">✓ server created — 91 s</span><br>
+          <span class="done">✓ DNS live · TLS issued</span><br>
+          <span class="done">✓ containers up · schema created itself</span><br>
+          ▸ waiting for first health check…
+        </div>
+        <span class="chip ok">✓ your system is alive</span>
+        <div class="btns"><span class="btn pri">Open setup → kb.acme.com/setup</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>A review screen before money is spent — the CLI's <code>--plan</code>, rendered. The one-time admin URL in the button is the phase-2 key; it expires after first use.<b>On failure</b>Any step can be retried — the whole launcher is idempotent; re-running never double-creates.</div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 2 · PHASE 2 -->
+<section>
+  <h2>2 · Phase 2 — the wizard</h2>
+  <h3>Ten steps at your real domain — a checklist, not a corridor</h3>
+  <p class="lede">Served by the system itself. Each card verifies live before it turns green; green ticks become permanent nightly checks. Close the browser whenever — state lives in the database.</p>
+
+  <!-- W1 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 1/10</span></div>
+      <div class="sbody">
+        <div class="stp">Claim <span class="tm">· 1 min</span></div>
+        <div class="q">This system has no owner yet. Claim it.</div>
+        <div class="fl">Your name</div>
+        <div class="inp"><span class="ph">Zeeshan Bari</span></div>
+        <div class="hp" style="margin-top:10px">You're signed in with the one-time admin key. Once Google connects (step 6), you'll switch to "Log in with Google" and the key retires to break-glass.</div>
+        <div class="btns"><span class="btn pri">Claim &amp; continue</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>Someone must be the operator — the actor every early audit event is attributed to.<b>Validates</b>The one-time URL token; it burns on use.</div>
+  </div>
+
+  <!-- W2 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 2/10</span></div>
+      <div class="sbody">
+        <div class="stp">The recovery key <span class="tm">· 2 min · cannot skip</span></div>
+        <div class="q">Store this key. It is shown exactly once.</div>
+        <div class="key">KB1-R7XM-4Q9T-VN2H-8KLP-3WDF</div>
+        <div class="hp">Every credential you enter from here is encrypted with this key. Backups include your secrets <em>because</em> of it — lose the key and a backup can't be opened. Put it in a password manager now.</div>
+        <div class="fl">Type the last four characters to confirm</div>
+        <div class="inp"><span class="ph">····</span></div>
+        <div class="btns"><span class="btn">Download .txt</span><span class="btn pri">I've stored it — continue</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>ADR-0011's ceremony: one key outside the system makes restores restore <i>working</i> systems. Doing it before any secret enters means nothing is ever stored under a key the operator hasn't saved.<b>Skip</b>Never.</div>
+  </div>
+
+  <!-- W3 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 3/10</span></div>
+      <div class="sbody">
+        <div class="stp">Claude <span class="tm">· 3 min</span></div>
+        <div class="q">Connect the model.</div>
+        <div class="fl">Anthropic API key — <span style="color:var(--accent)">console.anthropic.com ↗</span></div>
+        <div class="inp">sk-ant-••••••••••••••••</div>
+        <span class="chip ok">✓ live test passed — 214 tokens, CA$0.0011</span>
+        <div class="fl">Daily spend cap — hard stop, then alert</div>
+        <div class="inp">CA$ 5 / day ▾ &nbsp;<span class="ph">(≈ CA$150/mo ceiling)</span></div>
+        <div class="hp" style="margin-top:10px">Also set a monthly limit in Anthropic's console — two caps are better than one.</div>
+        <div class="btns"><span class="btn pri">Save &amp; continue</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The one paid credential. The cap is enforced at our gateway — stop first, alert second, never the reverse.<b>Validates</b>One real Haiku call; the cost shown is the actual cost of that call.<b>Skip</b>Yes — system runs in search-only mode until connected.</div>
+  </div>
+
+  <!-- W4 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 4/10</span></div>
+      <div class="sbody">
+        <div class="stp">Slack — the app <span class="tm">· 4 min · needs workspace admin</span></div>
+        <div class="q">Create the Slack app from our manifest.</div>
+        <div class="hp">1&nbsp; Open <strong style="color:var(--accent)">this pre-filled link ↗</strong> — the manifest is already pasted<br>2&nbsp; Pick your workspace → <em>Create</em> → <em>Install to workspace</em><br>3&nbsp; Copy the two tokens back here</div>
+        <div class="fl">Bot token</div>
+        <div class="inp">xoxb-••••••••••••</div>
+        <div class="fl">App-level token — socket mode</div>
+        <div class="inp">xapp-••••••••••••</div>
+        <span class="chip ok">✓ connected as @kb — socket open, 47 public channels visible</span>
+        <div class="btns"><span class="btn pri">Continue to channels</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>Slack requires an admin session to create apps — the manifest link reduces it to three clicks. Socket mode is why no webhook URL is ever needed.<b>Validates</b><code>auth.test</code> + a live socket connection + channel list.<b>Skip</b>Yes — but this is usually the whole point.</div>
+  </div>
+
+  <!-- W5 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 5/10</span></div>
+      <div class="sbody">
+        <div class="stp">Slack — channels &amp; labels <span class="tm">· 3 min</span></div>
+        <div class="q">What flows in, and how sensitive is it?</div>
+        <div class="optc sel">Ingest all public channels — recommended<small>47 channels · new ones join automatically</small></div>
+        <div class="optc">Let me pick<small>choose from the list</small></div>
+        <div class="klist">#general&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;#sales&nbsp;&nbsp;open&nbsp;&nbsp;&nbsp;#finance&nbsp;&nbsp;<span style="color:var(--accent)">private ▾</span><br>#leadership&nbsp;&nbsp;<span style="color:var(--accent)">secret ▾</span>&nbsp;&nbsp;&nbsp;#random&nbsp;&nbsp;open</div>
+        <div class="hp" style="margin-top:10px">Private channels: invite <code>@kb</code> to any you want ingested — it can never see one it isn't invited to. Labels gate who sees what in answers, forever.</div>
+        <div class="btns"><span class="btn pri">Start ingesting</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>Labels are retrofit-proof only if they're born here — an HR channel must never leak into a #general answer.<b>Validates</b>The first cursor starts moving; the card shows live message counts within a minute.<b>Default</b>public→open; anything private-in-Slack→private label.</div>
+  </div>
+
+  <!-- W6 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 6/10</span></div>
+      <div class="sbody">
+        <div class="stp">Google <span class="tm">· 12 min · needs Workspace admin</span></div>
+        <div class="q">Connect Google — login, Drive, Gmail.</div>
+        <div class="hp">Guided, with screenshots: create a GCP project → enable Drive + Gmail APIs → consent screen (Internal) → OAuth client with this exact redirect: <code>https://kb.acme.com/oauth/callback</code></div>
+        <div class="fl">Client ID</div>
+        <div class="inp">…apps.googleusercontent.com</div>
+        <div class="fl">Client secret</div>
+        <div class="inp">••••••••••••</div>
+        <span class="chip ok">✓ client valid</span>&nbsp;<span class="chip ok">✓ zeeshan@acme.com connected — Drive + Gmail readable</span>
+        <div class="hp" style="margin-top:10px">Then: pick Drive folders to ingest (+ a label each) → turn on <strong>Log in with Google</strong> → your session switches to SSO; the admin key retires.</div>
+        <div class="btns"><span class="btn pri">Connect my account</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The longest step, honestly labeled. Google's consent screen is their security model — irreducible. Each teammate later connects their own Gmail via an invite link; the operator only unlocks the org.<b>Validates</b>OAuth round-trip; lists one Drive folder; reads zero-byte of Gmail beyond a label list.<b>Skip</b>Yes — login stays on admin key until then.</div>
+  </div>
+
+  <!-- W7 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 7/10</span></div>
+      <div class="sbody">
+        <div class="stp">Mac mini <span class="tm">· 8 min · optional — hidden if toggled off</span></div>
+        <div class="q">Enroll the Mac mini.</div>
+        <div class="hp">On the mini, paste this in Terminal:</div>
+        <div class="inp">curl -fsSL https://kb.acme.com/enroll | sh</div>
+        <span class="chip ok">✓ mini-01 appeared via Tailscale</span>
+        <div class="hp" style="margin-top:12px">Now grant Full Disk Access — Apple requires a human here:</div>
+        <div class="btns" style="margin-top:6px"><span class="btn">Open System Settings at the right pane</span></div>
+        <div class="klist" style="margin-top:12px">iMessage&nbsp;&nbsp;<span style="color:var(--accent)">✓ readable</span>&nbsp;&nbsp;&nbsp;WhatsApp&nbsp;&nbsp;<span style="color:var(--accent)">✓ found</span>&nbsp;&nbsp;&nbsp;audio folder&nbsp;&nbsp;watching</div>
+        <div class="btns"><span class="btn pri">Continue</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The only step requiring a second machine, and the only one Apple forces a human through (TCC). The deep-link button lands on the exact Settings pane.<b>Validates</b>Agent heartbeat over Tailscale; a real read of <code>chat.db</code>'s schema — not just file existence.<b>No native installer app</b>— one script + this guided page; a menu-bar status item can come later.</div>
+  </div>
+
+  <!-- W8 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 8/10</span></div>
+      <div class="sbody">
+        <div class="stp">Watchers <span class="tm">· 4 min · recommended</span></div>
+        <div class="q">Let something outside watch the box.</div>
+        <div class="fl">healthchecks.io project key — free ↗</div>
+        <div class="inp">hc_••••••••</div>
+        <span class="chip ok">✓ dead-man created — first ping received</span>
+        <div class="fl">Sentry DSN — free ↗</div>
+        <div class="inp">https://••••@sentry.io/…</div>
+        <span class="chip ok">✓ test event visible</span>
+        <div class="btns"><span class="btn">Skip for now</span><span class="btn pri">Continue</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>SQL can watch everything except the box dying — that needs an outside heartbeat.<b>Validates</b>An actual ping and an actual test event — not key-shape.<b>Skip</b>Yes; the status page nags weekly, honestly.</div>
+  </div>
+
+  <!-- W9 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 9/10</span></div>
+      <div class="sbody">
+        <div class="stp">First knowledge <span class="tm">· 6 min</span></div>
+        <div class="q">Teach it its first number — and three questions.</div>
+        <div class="fl">Pick the spreadsheet where sales live</div>
+        <div class="inp">📄 2026 Revenue Tracker ▾ &nbsp;<span class="ph">from your Drive</span></div>
+        <div class="fl">Which column is the amount? · the date?</div>
+        <div class="inp">D — "Net total" ▾ &nbsp;&nbsp;·&nbsp;&nbsp; A — "Date" ▾</div>
+        <span class="chip ok">✓ net_sales · March 2026 = $412,380 — confirm?</span>
+        <div class="fl">Three questions you wish it could answer</div>
+        <div class="inp"><span class="ph">why did sales drop in March?</span></div>
+        <div class="btns"><span class="btn pri">Save — this becomes metric #1 and golden questions 1–3</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The metric definition is born from a real sheet, confirmed by a human against a number they recognize — determinism's first brick. The three questions seed the golden-50.<b>Validates</b>The metric runs and returns a value the operator confirms on sight.<b>Skip</b>Yes — with a standing to-do.</div>
+  </div>
+
+  <!-- W10 -->
+  <div class="scr">
+    <div class="shot"><div class="tbar"><i></i><i></i><i></i><span class="url">kb.acme.com/setup · 10/10</span></div>
+      <div class="sbody">
+        <div class="stp">Backfill &amp; finish <span class="tm">· 2 min, then it works alone</span></div>
+        <div class="q">How much history should we read?</div>
+        <div class="optc">Last 90 days<small>~31k messages · extraction ≈ CA$9 · ready tonight</small></div>
+        <div class="optc sel">Last year — recommended<small>~118k messages · extraction ≈ CA$28 · ready in ~2 nights</small></div>
+        <div class="optc">Everything<small>~410k messages · extraction ≈ CA$85 · ready in ~5 nights</small></div>
+        <div class="prog" style="margin-top:12px"><span class="done">✓ slack cursor moving · ✓ drive cursor moving · ✓ first backup tonight 03:00</span><br>▸ restore drill scheduled — Sep 1</div>
+        <div class="btns"><span class="btn pri">Finish — ask your first question</span></div>
+      </div>
+    </div>
+    <div class="ann"><b>Why</b>The estimates are <i>live math</i> from the message counts fetched in steps 4–6 — not guesses. Cost lands before commitment.<b>Validates</b>Finish is only enabled when at least one cursor has moved — the wizard's last tick is the system's first heartbeat.</div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 3 · MASTER TABLE -->
+<section>
+  <h2>3 · Every question, one table</h2>
+  <h3>Nineteen questions. Twelve are paste-a-value.</h3>
+
+  <table>
+    <tr><th>#</th><th>Question</th><th>Type</th><th>Default</th><th>Verified by</th><th>Skip?</th></tr>
+    <tr><td>1</td><td>Where will your system live?</td><td>choice ×3</td><td>rent (Hetzner)</td><td>—</td><td>no</td></tr>
+    <tr><td>2</td><td>Hetzner token / SSH address</td><td>paste</td><td>—</td><td>live API list / SSH probe</td><td>no</td></tr>
+    <tr><td>3</td><td>Your system's address</td><td>text</td><td>kb.&lt;domain&gt;</td><td>DNS record live</td><td>no</td></tr>
+    <tr><td>4</td><td>Cloudflare token (R2 + DNS)</td><td>paste</td><td>—</td><td>bucket write + record set</td><td>no</td></tr>
+    <tr><td>5</td><td>Company name</td><td>text</td><td>—</td><td>—</td><td>no</td></tr>
+    <tr><td>6</td><td>Workspace domain ("the team")</td><td>text</td><td>from address</td><td>proven at Google connect</td><td>no</td></tr>
+    <tr><td>7</td><td>Timezone</td><td>confirm</td><td>auto-detected</td><td>—</td><td>—</td></tr>
+    <tr><td>8</td><td>Display currency</td><td>choice</td><td>CAD</td><td>—</td><td>—</td></tr>
+    <tr><td>9–11</td><td>Mini? · Watchers? · Kanban?</td><td>toggles</td><td>off · on · none</td><td>—</td><td>—</td></tr>
+    <tr><td>12</td><td>Your name</td><td>text</td><td>—</td><td>one-time URL burns</td><td>no</td></tr>
+    <tr><td>13</td><td>Recovery key confirmation</td><td>re-type 4</td><td>—</td><td>match</td><td><strong>never</strong></td></tr>
+    <tr><td>14</td><td>Anthropic key + daily cap</td><td>paste + slider</td><td>CA$5/day</td><td>one real model call</td><td>yes → search-only</td></tr>
+    <tr><td>15</td><td>Slack bot + app tokens</td><td>paste ×2</td><td>—</td><td>auth.test + live socket</td><td>yes</td></tr>
+    <tr><td>16</td><td>Channels + labels</td><td>choice + pills</td><td>all public → open</td><td>cursor moves, counts shown</td><td>defaults</td></tr>
+    <tr><td>17</td><td>Google client ID + secret, connect, folders</td><td>paste ×2 + OAuth + picker</td><td>—</td><td>OAuth round-trip + folder list</td><td>yes → admin-key login stays</td></tr>
+    <tr><td>18</td><td>healthchecks key · Sentry DSN</td><td>paste ×2</td><td>—</td><td>real ping · real event</td><td>yes, nagged</td></tr>
+    <tr><td>19</td><td>First metric (sheet + columns) + 3 questions</td><td>picker + text</td><td>templates</td><td>metric runs; human confirms the number</td><td>yes, to-do</td></tr>
+    <tr><td>—</td><td>Backfill depth</td><td>choice ×3</td><td>1 year</td><td>live cost math from real counts</td><td>—</td></tr>
+  </table>
+
+  <h4>What we never ask — every unasked question is a support ticket that never happens</h4>
+  <ul>
+    <li>Server size, Postgres anything, ports, TLS details, backup schedule — derived or fixed, shown not asked.</li>
+    <li>Embedding model, extractor thresholds, queue settings — config with consequences, not setup questions.</li>
+    <li>Bot display name, region (beyond one link), currency of stored data — defaults with a settings page.</li>
+    <li>Anything twice. If the launcher learned it, the wizard knows it.</li>
+  </ul>
+
+  <div class="flag">
+    <span class="k">Resume, re-run, and team members</span>
+    Close the browser at any step — state lives in the database; the checklist resumes where you left it. Every card reappears in <strong>Settings → Connections</strong> afterward, so the wizard is never the last chance. Teammates never see this wizard: they get an invite link that runs exactly one step — their own Google consent.
+  </div>
+</section>
+
+<footer style="margin-top:70px;padding-top:26px;border-top:1px solid var(--bd);font-family:var(--sans);font-size:12.5px;color:var(--tx4);line-height:1.8">
+  Status: <strong style="color:var(--accent)">AGREED 2026-08-01</strong> — recorded as ADR-0013 and <code>01-architecture/setup-wizard.md</code>. Companions: <code>kg-install-spec.html</code> (the machinery underneath) · <code>docs/03-reference/credentials-manifest.md</code> (exact scopes).
+</footer>
+
+</div>
+</body>
+</html>

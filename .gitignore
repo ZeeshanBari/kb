@@ -1,0 +1,10 @@
+# بسم الله الرحمن الرحيم
+node_modules/
+dist/
+*.log
+.DS_Store
+# credentials — .env is a generated decrypt artifact, never truth, never committed (ADR-0019)
+.env*
+!.env.example
+# age private keys never enter the repo — password manager + the one CI AGE_KEY secret only
+age-keys.txt

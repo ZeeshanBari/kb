@@ -1,0 +1,20 @@
+{
+  "name": "kb",
+  "private": true,
+  "type": "module",
+  "workspaces": ["platform", "worker"],
+  "scripts": {
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:pg": "vitest run tests/integration"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/pg": "^8",
+    "typescript": "^5.6",
+    "vitest": "^2"
+  },
+  "dependencies": {
+    "pg": "^8.13"
+  }
+}

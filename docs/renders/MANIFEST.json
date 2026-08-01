@@ -1,0 +1,64 @@
+{
+  "note": "بسم الله الرحمن الرحيم — Maps every render to its source docs. A render older than any source fails check-docs (ADR-0015).",
+  "renders": [
+    {
+      "file": "kg-architecture-spec.html",
+      "rendered_at": "2026-08-01",
+      "sources": [
+        "01-architecture/system-overview.md",
+        "01-architecture/data-layer.md",
+        "01-architecture/ingestion-and-edge.md",
+        "01-architecture/answering.md",
+        "02-decisions/0001-modular-monolith.md",
+        "02-decisions/0002-hosting-hetzner-r2.md",
+        "02-decisions/0003-postgres-for-everything.md",
+        "02-decisions/0004-typescript-no-orm.md",
+        "02-decisions/0005-web-plus-slack.md",
+        "02-decisions/0006-observability-not-datadog.md",
+        "02-decisions/0007-graph-engine-not-graphrag.md",
+        "02-decisions/0008-models-claude-gateway.md",
+        "02-decisions/0009-mini-is-transport-not-pipeline.md",
+        "03-reference/stack-and-tools.md",
+        "03-reference/testing-and-observability.md",
+        "03-reference/build-order.md"
+      ]
+    },
+    {
+      "file": "kg-install-spec.html",
+      "rendered_at": "2026-08-01",
+      "sources": [
+        "01-architecture/install-and-portability.md",
+        "03-reference/credentials-manifest.md",
+        "02-decisions/0010-ship-as-compose-bundle.md",
+        "02-decisions/0011-secrets-in-db-recovery-key.md",
+        "02-decisions/0012-converge-installer-not-terraform.md"
+      ]
+    },
+    {
+      "file": "kg-wizard-proposal.html",
+      "rendered_at": "2026-08-01",
+      "sources": [
+        "01-architecture/setup-wizard.md",
+        "02-decisions/0013-wizard-two-browser-phases.md",
+        "02-decisions/0011-secrets-in-db-recovery-key.md"
+      ]
+    },
+    {
+      "file": "kg-execution-plan.html",
+      "rendered_at": "2026-08-01",
+      "sources": [
+        "03-reference/execution-plan.md",
+        "02-decisions/0016-execution-plan.md"
+      ]
+    },
+    {
+      "file": "kg-ship-and-onboard.html",
+      "rendered_at": "2026-08-01",
+      "sources": [
+        "02-decisions/0017-feature-lifecycle.md",
+        "02-decisions/0018-agentic-workshop.md",
+        "01-architecture/setup-wizard.md"
+      ]
+    }
+  ]
+}
