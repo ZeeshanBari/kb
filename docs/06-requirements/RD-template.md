@@ -29,6 +29,22 @@ Two sentences. What exists after this stage that didn't before — and for whom.
 
 - …
 
+## Boundaries & test pyramid (ADR-0022)
+
+| Tier | What this stage adds |
+|---|---|
+| Layers/edges touched | which layers, which contracts (schema · HTTP); a **new** edge needs an ADR |
+| Unit | … |
+| Integration (real PG) | … |
+| Contract | … — *"none" must be argued, not assumed* |
+| E2E | … |
+
+## Hardening (ADR-0022)
+
+| Failure mode introduced | Tri-state check watching it | Cap / limit |
+|---|---|---|
+| … | … | … |
+
 ## Depends on
 
 Stages/RDs that must be green first · credentials needed (see [`../03-reference/credentials-manifest.md`](../03-reference/credentials-manifest.md)).

@@ -31,6 +31,25 @@ The system exists in production before it has features: the compose bundle runs 
 
 `deploy/compose.yaml` + Caddyfile · `kb` CLI (`deploy`, `restore`, `status`) · vault schema + ceremony · status page (web, Tailscale-only) · pgBackRest config → R2 · drill script · `kb-deploy` seeded for real (private).
 
+## Boundaries & test pyramid (ADR-0022)
+
+| Tier | This stage |
+|---|---|
+| Layers/edges touched | `app` is born (status page — imports `platform` only) · `deploy` + `kb` CLI (imports `platform` only) · vault lives inside `platform` · **no new edges; matrix unchanged** |
+| Unit | vault crypto round-trip, wrong-key fails closed · converge planner pure logic (planning twice yields the identical plan) · backup-freshness verdict mapping (fresh / stale / unreachable → ok / fail / unverifiable) |
+| Integration (real PG) | vault store→retrieve→re-derive against real Postgres · status checks reading real tables |
+| Contract | every converge step idempotent — applied twice, the second is a no-op, asserted per step · R2 contract probe: write → read → delete one object |
+| E2E | **the exit test is the E2E**: destroy the box → `kb restore` → status green, secrets intact · nightly compose-level deploy smoke in CI |
+
+## Hardening (ADR-0022)
+
+| Failure mode | Tri-state check watching it | Cap / limit |
+|---|---|---|
+| Backup silently stale or missing | backup-freshness check — *fail* when >24h, *unverifiable* when R2 unreachable; never a silent green | — |
+| Vault key lost with the box | recovery-key ceremony unskippable (ADR-0011); the drill proves re-derivation for real | — |
+| Box exposed before auth exists | Tailscale-only at this stage — no public port until stage 4 | compose publishes no public ports |
+| Deploy tooling sprawl / drift | `kb deploy --plan` shows every converge step before apply (ADR-0012) | steps enumerated, reviewed in PRs |
+
 ## Depends on
 
 Stage 0 done ✓ · 🔑 **Hetzner API token** and 🔑 **Cloudflare R2 keys** in the hand-off `.env` (see `../03-reference/credentials-manifest.md`) · 🔑 `kb-deploy` flipped private (operator click, ~5 s) · box cost begins: CX42 ≈ CA$26/mo (ADR-0002).

@@ -22,7 +22,7 @@ Every PR that changes what's true here updates this file — rule 5 applies to s
 | **Active stage** | 0 **closed 2026-08-02** → 1 pending RD agreement |
 | **Stage-0 record** | all exit tests demonstrated live: seed CI green · red PR #3 blocked and closed unmerged · docs gate in CI · fresh-clone suite 13/13 · About auto-sync proven on PR #2's merge |
 | **Next stage** | 1 — walking skeleton on the real box · [RD-1](06-requirements/RD-1-walking-skeleton.md) **proposed — no agreement, no branch** |
-| **Waiting on operator** | merge the stage-0 closeout PR · read RD-1 → agree or amend · then the stage-1 🔑 items: Hetzner API token + R2 keys into the hand-off `.env` · flip `kb-deploy` private (ADR-0020 pre-condition) |
+| **Waiting on operator** | merge the stage-0 closeout PR · read the **amended** RD-1 (now carries its boundary/test/hardening tables per ADR-0022) → agree or amend · then the stage-1 🔑 items: Hetzner API token + R2 keys into the hand-off `.env` · flip `kb-deploy` private (ADR-0020 pre-condition) |
 
 ## Shipped so far — one line per feature
 

@@ -34,6 +34,7 @@ Every significant choice lives here as a numbered, **immutable** record. To chan
 | [0019](0019-dev-credentials.md) | Dev credentials — SOPS+age truth, generated .env, one AGE_KEY in CI | accepted · deferred while repos are public (0020) · PAT-in-CI clause amended by 0021 |
 | [0020](0020-repos-public.md) | Repos public — free enforced protection; no committed ciphertext | accepted |
 | [0021](0021-about-sync-token.md) | About-sync — existing PAT backs the repo-description automation | accepted |
+| [0022](0022-enforced-boundaries.md) | Layer boundaries enforced in CI; test pyramid declared per stage | accepted |
 
 ## Template
 
