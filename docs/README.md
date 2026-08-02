@@ -35,9 +35,9 @@ Every message and document lands **raw and immutable** in one Postgres database,
 - `00-vision/mission-and-principles.md` — the six features, the 13 principles
 - `01-architecture/` — `system-overview` · `data-layer` · `ingestion-and-edge` · `answering` · `install-and-portability` · `setup-wizard`
 - `02-decisions/` — ADR-0001…0019 (see its README for the index and template)
-- `03-reference/` — `stack-and-tools` · `testing-and-observability` · `execution-plan` (ADR-0016) · `glossary` · `credentials-manifest`
+- `03-reference/` — `stack-and-tools` · `testing-and-observability` · `execution-plan` (ADR-0016) · `glossary` · `credentials-manifest` · `per-unit-checklist` (per company / per mini)
 - `04-practices/` — `documentation-rules` · `conventions` (incl. the basmallah convention)
-- `05-research/` — `lessons-from-aos-v1` · `external-systems-qm-graphrag`
+- `05-research/` — `lessons-from-aos-v1` · `external-systems-qm-graphrag` · `graphify-evaluation`
 - `06-requirements/` — the RD process + `RD-template.md`; one page per stage, no RD no branch
 
 ## Folder layout (ADR-0014, ADR-0015)

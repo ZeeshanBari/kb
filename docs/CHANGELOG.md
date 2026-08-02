@@ -11,6 +11,21 @@ owner: zeeshan
 
 All notable changes to this documentation. Newest first.
 
+## 2026-08-02 (research + reference)
+- **Graphify evaluated** (`05-research/graphify-evaluation.md`) — codebase-KG for coding assistants; local, Apache-2.0, agent-skill/MCP. **Not adopted now**: built for large unfamiliar monorepos, ours is small with a designed navigation layer, and it would add a Python toolchain (ADR-0004) plus a second drift-prone map. Revisit trigger recorded (~30–50k LOC). One idea flagged for RD-5: explicit edge `derivation` labels (extracted vs inferred).
+- **New: `03-reference/per-unit-checklist.md`** — every human-only step and every automated step, per company install and per Mac mini enrollment.
+- Repo `CLAUDE.md` gains the **sandbox operational memory** (API gate → verify via pull refs, push-opens-PRs, mirror duty, credentials via hand-off file). Account memory tools are unavailable in this environment — **the repo is the project's memory**, by design.
+
+## 2026-08-02 (boundaries)
+- **ADR-0022** — the operator's requirement made mechanical: layer matrix (`platform` ← `worker`/`app`, never sideways; `edge` = HTTP only) enforced by `tools/check-boundaries.mjs` in the CI test job — a forbidden import is a red PR. Proven both ways before shipping (11 real imports green; planted violation red).
+- New: `01-architecture/boundaries-and-testing.md` — the matrix, the four tiers (unit · integration · contract · E2E), and what "hardened" means concretely.
+- RD template gains **Boundaries & test pyramid** + **Hardening** sections ("none" must be argued); RD-1 amended with its concrete tables before agreement.
+
+## 2026-08-02 (stage 0 — closed)
+- **Stage 0 signed off by the operator** after live gate demonstrations: the deliberately-red PR #3 was blocked from merging and closed unmerged (RD-0 exit test 2); `about-sync` set the repo About on PR #2's merge (ADR-0021 proven end-to-end); auto-PR proven twice (~20 s push-to-PR). RD-0 stamped `done`.
+- **RD-1 (walking skeleton) proposed** — compose bundle on a real Hetzner box, secrets vault + recovery-key ceremony, pgBackRest → R2, destroy-and-restore exit test. Awaiting operator agreement; stage-1 🔑 items: Hetzner token + R2 keys, `kb-deploy` → private.
+- Probe branch and merged work branches deleted; STATUS flipped to done.
+
 ## 2026-08-01 (agent navigation)
 - **`STATUS.md` added — the baton.** One-line status (mirrored in the repo About), remaining-in-stage table, shipped-features list, and the 6-step boot order for any new agent. Every PR that changes what's true updates it.
 - Repo root gains a thin `CLAUDE.md` (auto-loaded agent entry point → `docs/`) and a `CHANGELOG.md` signpost; the repo README now opens with the live status line. Full content stays in `docs/` — root files are signposts, never sources.
