@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: node docs/tools/check-boundaries.mjs   # ADR-0022 — a forbidden import edge is a red PR
       - run: npm ci
       - run: npm test
 
