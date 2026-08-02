@@ -11,6 +11,11 @@ owner: zeeshan
 
 All notable changes to this documentation. Newest first.
 
+## 2026-08-02 (research + reference)
+- **Graphify evaluated** (`05-research/graphify-evaluation.md`) — codebase-KG for coding assistants; local, Apache-2.0, agent-skill/MCP. **Not adopted now**: built for large unfamiliar monorepos, ours is small with a designed navigation layer, and it would add a Python toolchain (ADR-0004) plus a second drift-prone map. Revisit trigger recorded (~30–50k LOC). One idea flagged for RD-5: explicit edge `derivation` labels (extracted vs inferred).
+- **New: `03-reference/per-unit-checklist.md`** — every human-only step and every automated step, per company install and per Mac mini enrollment.
+- Repo `CLAUDE.md` gains the **sandbox operational memory** (API gate → verify via pull refs, push-opens-PRs, mirror duty, credentials via hand-off file). Account memory tools are unavailable in this environment — **the repo is the project's memory**, by design.
+
 ## 2026-08-02 (boundaries)
 - **ADR-0022** — the operator's requirement made mechanical: layer matrix (`platform` ← `worker`/`app`, never sideways; `edge` = HTTP only) enforced by `tools/check-boundaries.mjs` in the CI test job — a forbidden import is a red PR. Proven both ways before shipping (11 real imports green; planted violation red).
 - New: `01-architecture/boundaries-and-testing.md` — the matrix, the four tiers (unit · integration · contract · E2E), and what "hardened" means concretely.
