@@ -23,7 +23,7 @@ owner: zeeshan
 | 6 | `05-research/` | What we studied and what we learned from it | For deep context |
 | 7 | `06-requirements/` | What each stage must deliver — agreed before code starts | Before starting any stage |
 
-**Agents:** read [`AGENTS.md`](AGENTS.md) before touching anything.
+**Agents:** boot order is [`STATUS.md`](STATUS.md) → [`AGENTS.md`](AGENTS.md) → the active RD. Never touch anything before those three.
 
 ## The system in three sentences
 
@@ -31,6 +31,7 @@ Every message and document lands **raw and immutable** in one Postgres database,
 
 ## Contents map
 
+- `STATUS.md` — **the baton**: one-line status, remaining-in-stage, shipped features, agent boot order
 - `00-vision/mission-and-principles.md` — the six features, the 13 principles
 - `01-architecture/` — `system-overview` · `data-layer` · `ingestion-and-edge` · `answering` · `install-and-portability` · `setup-wizard`
 - `02-decisions/` — ADR-0001…0019 (see its README for the index and template)

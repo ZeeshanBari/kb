@@ -31,8 +31,9 @@ Every significant choice lives here as a numbered, **immutable** record. To chan
 | [0016](0016-execution-plan.md) | The execution plan — eleven stages, five gates, RDs first | accepted |
 | [0017](0017-feature-lifecycle.md) | Feature lifecycle — registry, feature_state flags, one onboarding flow | accepted |
 | [0018](0018-agentic-workshop.md) | The agentic workshop — PR structure, approval auto-merge, scoped token | accepted |
-| [0019](0019-dev-credentials.md) | Dev credentials — SOPS+age truth, generated .env, one AGE_KEY in CI | accepted · deferred while repos are public (0020) |
+| [0019](0019-dev-credentials.md) | Dev credentials — SOPS+age truth, generated .env, one AGE_KEY in CI | accepted · deferred while repos are public (0020) · PAT-in-CI clause amended by 0021 |
 | [0020](0020-repos-public.md) | Repos public — free enforced protection; no committed ciphertext | accepted |
+| [0021](0021-about-sync-token.md) | About-sync — existing PAT backs the repo-description automation | accepted |
 
 ## Template
 

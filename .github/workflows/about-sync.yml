@@ -1,0 +1,30 @@
+# بسم الله الرحمن الرحيم
+# About-sync (ADR-0021): the repo About always mirrors docs/STATUS.md's one-liner.
+# Authenticated by the REPO_ADMIN_TOKEN Actions secret (operator-installed; see ADR-0021 —
+# currently the kb-agent PAT by the operator's explicit choice; swap the secret's value
+# for an admin-only token at any time to harden, no workflow change needed).
+name: about-sync
+on:
+  push:
+    branches: [main]
+    paths: ['docs/STATUS.md']
+
+permissions: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy the STATUS one-liner into the repo About
+        env:
+          GH_TOKEN: ${{ secrets.REPO_ADMIN_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "REPO_ADMIN_TOKEN secret not set yet — skipping (About unchanged)"
+            exit 0
+          fi
+          line=$(grep -m1 '^> Stage' docs/STATUS.md | sed 's/^> *//')
+          if [ -z "$line" ]; then echo "no '> Stage …' line in docs/STATUS.md"; exit 1; fi
+          gh repo edit "$GITHUB_REPOSITORY" --description "$line"
+          echo "About set to: $line"
