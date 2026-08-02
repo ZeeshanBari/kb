@@ -1,7 +1,7 @@
 ---
 title: "RD-0: The repo gate"
-status: agreed
-updated: 2026-08-01
+status: done
+updated: 2026-08-02
 owner: zeeshan
 ---
 
@@ -44,4 +44,4 @@ PAT in the hand-off file (✓ received) · both repos created (✓ verified empt
 ## Sign-offs
 
 - RD agreed (gate 1): **2026-08-01** — operator (with the public-repos amendment)
-- Stage signed off (after gate 5): _pending_ — operator
+- Stage signed off (after gate 5): **2026-08-02** — operator, after live demonstration of the gates: deliberately-red PR #3 blocked from merging and closed unmerged (exit test 2) · About auto-set by `about-sync` on PR #2's merge (ADR-0021 proven) · fresh-`npm ci` suite 13/13 (exit test 4) · check-docs green in CI on every PR (exit tests 1, 3)

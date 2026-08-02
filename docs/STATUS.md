@@ -1,7 +1,7 @@
 ---
 title: Status — the baton
 status: current
-updated: 2026-08-01
+updated: 2026-08-02
 owner: zeeshan
 ---
 
@@ -9,9 +9,9 @@ owner: zeeshan
 
 # Status — the baton
 
-**The one-line status** *(mirror of the repo About):*
+**The one-line status** *(mirror of the repo About — synced automatically):*
 
-> Stage 0 — the repo gate · ~95% done · shipped: replay-safe ingest platform · self-checking docs · CI merge gate · auto-PR workshop
+> Stage 0 — the repo gate · done ✓ 2026-08-02 · shipped: replay-safe ingest platform · self-checking docs · CI merge gate · auto-PR workshop · next: stage 1, walking skeleton (RD-1 proposed)
 
 Every PR that changes what's true here updates this file — rule 5 applies to status too.
 
@@ -19,18 +19,17 @@ Every PR that changes what's true here updates this file — rule 5 applies to s
 
 | | |
 |---|---|
-| **Active stage** | 0 — the repo gate · [RD-0](06-requirements/RD-0-repo-gate.md) (agreed) |
-| **Done this stage** | seed commit (13/13 CI) · kb-deploy seeded · auto-PR workshop · **PR #1 (ADR-0020) merged 2026-08-01** ✓ |
-| **Remaining in stage** | merge PR #2 (this navigation layer) · flip Settings → Actions → General → **"Allow GitHub Actions to create and approve pull requests"** (auto-PR needs it) · required checks `test` · `docs` · `gitleaks` in the main ruleset · add Actions secret **`REPO_ADMIN_TOKEN`** = the kb-agent PAT (ADR-0021 — About then sets itself on merge) · operator done-stamp on RD-0 |
-| **Next stage** | 1 — walking skeleton on the real box. **RD-1 not yet written — no RD, no branch** |
-| **Waiting on operator** | everything in "remaining" — all clicks, ~2 minutes total |
+| **Active stage** | 0 **closed 2026-08-02** → 1 pending RD agreement |
+| **Stage-0 record** | all exit tests demonstrated live: seed CI green · red PR #3 blocked and closed unmerged · docs gate in CI · fresh-clone suite 13/13 · About auto-sync proven on PR #2's merge |
+| **Next stage** | 1 — walking skeleton on the real box · [RD-1](06-requirements/RD-1-walking-skeleton.md) **proposed — no agreement, no branch** |
+| **Waiting on operator** | merge the stage-0 closeout PR · read RD-1 → agree or amend · then the stage-1 🔑 items: Hetzner API token + R2 keys into the hand-off `.env` · flip `kb-deploy` private (ADR-0020 pre-condition) |
 
 ## Shipped so far — one line per feature
 
 - **Platform core** — raw store with labels failing closed · idempotent event log · tri-state health; 13/13 against real Postgres from a fresh `npm ci`
 - **Connector contract + filedrop** — replay-safe by construction; the Phase-1 exit test (replay changes nothing) is a permanent CI assertion
-- **Self-checking docs** — the full decision record (ADR-0001…0020), agreed execution plan, RD process; `check-docs` fails CI on drift, broken links, stale renders
-- **The agentic workshop** — CI merge gate (test · docs · gitleaks) · push-a-branch-opens-a-PR (`auto-pr`) · worktree per PR · template-shaped commit bodies
+- **Self-checking docs** — the full decision record (ADR-0001…0021), agreed execution plan, RD process; `check-docs` fails CI on drift, broken links, stale renders
+- **The agentic workshop** — CI merge gate (test · docs · gitleaks), proven to block a red PR · push-a-branch-opens-a-PR (`auto-pr`), proven twice · worktree per PR · About auto-synced from this file (`about-sync`)
 
 ## How a new agent picks up the baton
 

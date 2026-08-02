@@ -11,6 +11,11 @@ owner: zeeshan
 
 All notable changes to this documentation. Newest first.
 
+## 2026-08-02 (stage 0 — closed)
+- **Stage 0 signed off by the operator** after live gate demonstrations: the deliberately-red PR #3 was blocked from merging and closed unmerged (RD-0 exit test 2); `about-sync` set the repo About on PR #2's merge (ADR-0021 proven end-to-end); auto-PR proven twice (~20 s push-to-PR). RD-0 stamped `done`.
+- **RD-1 (walking skeleton) proposed** — compose bundle on a real Hetzner box, secrets vault + recovery-key ceremony, pgBackRest → R2, destroy-and-restore exit test. Awaiting operator agreement; stage-1 🔑 items: Hetzner token + R2 keys, `kb-deploy` → private.
+- Probe branch and merged work branches deleted; STATUS flipped to done.
+
 ## 2026-08-01 (agent navigation)
 - **`STATUS.md` added — the baton.** One-line status (mirrored in the repo About), remaining-in-stage table, shipped-features list, and the 6-step boot order for any new agent. Every PR that changes what's true updates it.
 - Repo root gains a thin `CLAUDE.md` (auto-loaded agent entry point → `docs/`) and a `CHANGELOG.md` signpost; the repo README now opens with the live status line. Full content stays in `docs/` — root files are signposts, never sources.
